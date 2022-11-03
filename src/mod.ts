@@ -7,6 +7,8 @@ export async function getCurrentCommitHash() {
     return new TextDecoder().decode(output);
 }
 
+console.log('testing branch')
+
 const result = await getCurrentCommitHash();
 
 console.log(result);
