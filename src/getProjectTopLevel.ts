@@ -1,7 +1,7 @@
 export const gitPath = `${getProjectTopLevelSync()}/.git`;
 
 export function getProjectTopLevelSync(): string | Error {
-    let currentDir = new URL('..', import.meta.url).pathname.slice(0, -1);
+    let currentDir = Deno.cwd();
 
     while (currentDir !== '/') {
         try {
