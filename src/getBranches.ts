@@ -6,7 +6,7 @@ export function getBranchesSync(): Branch[] | Error {
         const packedRefs = Deno.readTextFileSync(`${gitPath}/packed-refs`);
         const branches = extractBranchesfromPackedRef(packedRefs);
         return branches;
-    } catch(e) {
+    } catch(_e) {
         try {
             const branchFiles = Deno.readDirSync(`${gitPath}/refs/heads`);
             const branches: Branch[] = [];

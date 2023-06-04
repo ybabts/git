@@ -9,7 +9,7 @@ export function getProjectTopLevelSync(): string | Error {
            if(fileInfo.isDirectory) {
             return currentDir;
            }
-        } catch (e) {
+        } catch (_e) {
             // Directory not found, continue traversing up
         }
 
