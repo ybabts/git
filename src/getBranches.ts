@@ -1,18 +1,20 @@
 import { gitPath } from "./getProjectTopLevel.ts";
+import { Branch } from "./Branch.ts";
 
-export function getBranchesSync(): string[] | Error {
+export function getBranchesSync(): Branch[] | Error {
     try {
         const packedRefs = Deno.readTextFileSync(`${gitPath}/packed-refs`);
         const branches = extractBranchesfromPackedRef(packedRefs);
         return branches;
     } catch(e) {
         try {
-            const branchFileNames = Deno.readDirSync(`${gitPath}/refs/heads`);
-            const branches = [];
+            const branchFiles = Deno.readDirSync(`${gitPath}/refs/heads`);
+            const branches: Branch[] = [];
 
-            for (const branchFileName of branchFileNames) {
-                const branchName = branchFileName.name;
-                branches.push(branchName);
+            for (const branchFile of branchFiles) {
+                if(branchFile.isFile) {
+                    branches.push(readBranchFile(branchFile));
+                }
             }
             return branches;
         } catch(e) {
@@ -21,16 +23,26 @@ export function getBranchesSync(): string[] | Error {
     }
 }
 
-function extractBranchesfromPackedRef(packedRefs: string): string[] {
+function extractBranchesfromPackedRef(packedRefs: string): Branch[] {
     const lines = packedRefs.split('\n');
-    const branches = [];
+    const branches: Branch[] = [];
 
     for (const line of lines) {
         if (line.includes('refs/')) {
             const branchRef = line.split(' ')[1];
             const branchName = branchRef.replace('refs/remotes/origin/', '');
-            branches.push(branchName);
+            branches.push({
+                name: branchName,
+                commitHash: line.split(' ')[0]
+            });
         }
     }
     return branches;
+}
+
+function readBranchFile(branchFile: Deno.DirEntry): Branch {
+    return {
+        name: branchFile.name,
+        commitHash: Deno.readTextFileSync(`${gitPath}/refs/heads/${branchFile.name}`).trim()
+    }
 }
