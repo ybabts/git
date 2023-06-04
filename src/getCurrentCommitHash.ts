@@ -1,9 +1,11 @@
-export function getCurrentCommitHashSync(): string {
-  const headFile = Deno.readTextFileSync("./.git/HEAD");
+import { gitPath } from "./getProjectTopLevel.ts";
+
+export function getCurrentCommitHashSync(): string | Error {
+  const headFile = Deno.readTextFileSync(`${gitPath}/HEAD`);
   const refMatch = headFile.match(/^ref: (.*)$/m);
 
   if (refMatch) {
-    const refFile = Deno.readTextFileSync(`./.git/${refMatch[1]}`);
+    const refFile = Deno.readTextFileSync(`${gitPath}/${refMatch[1]}`);
     const commitHashMatch = refFile.match(/^(\w{40})$/m);
 
     if (commitHashMatch) {
@@ -11,5 +13,5 @@ export function getCurrentCommitHashSync(): string {
     }
   }
 
-  throw new Error("Unable to get current commit hash");
+  return new Error("Unable to get current commit hash");
 }
