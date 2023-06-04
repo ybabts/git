@@ -1,4 +1,9 @@
-export const gitPath = `${getProjectTopLevelSync()}/.git`;
+export const gitPath = ((path: string | Error): string => {
+  if (path instanceof Error) {
+    throw path
+  }
+  return `${path}/.git`
+})(getProjectTopLevelSync())
 
 export function getProjectTopLevelSync(): string | Error {
   let currentDir = Deno.cwd();
