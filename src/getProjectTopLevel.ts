@@ -1,6 +1,6 @@
 export const gitPath = ((path: string | Error): string => {
   if (path instanceof Error) {
-    throw path
+    throw path;
   }
   return `${path}/.git`
 })(getProjectTopLevelSync())
