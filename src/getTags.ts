@@ -7,7 +7,7 @@ export function getTagsSync(): string[] | Error {
         return tags;
     } catch(e) {
         try {
-            const tagFileNames = await Deno.readDirSync(`${gitPath}/refs/tags`);
+            const tagFileNames = Deno.readDirSync(`${gitPath}/refs/tags`);
             const tags = [];
 
             for (const tagFileName of tagFileNames) {
