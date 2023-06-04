@@ -26,9 +26,9 @@ function extractBranchesfromPackedRef(packedRefs: string): string[] {
     const branches = [];
 
     for (const line of lines) {
-        if (line.startsWith('ref:')) {
+        if (line.includes('refs/')) {
             const branchRef = line.split(' ')[1];
-            const branchName = branchRef.replace('refs/heads/', '');
+            const branchName = branchRef.replace('refs/remotes/origin/', '');
             branches.push(branchName);
         }
     }
