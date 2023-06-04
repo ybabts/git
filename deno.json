@@ -1,22 +1,22 @@
 {
-    "lint": {
-      "rules": {
-        "tags": [
-          "recommended"
-        ],
-        "include": [
-          "ban-untagged-todo",
-          "camelcase",
-          "default-param-last",
-          "eqeqeq",
-          "explicit-function-return-type",
-          "explicit-module-boundary-types",
-          "no-await-in-loop",
-          "no-const-assign",
-          "no-eval",
-          "no-external-import",
-          "no-sparse-arrays"
-        ]
-      }
+  "lint": {
+    "rules": {
+      "tags": [
+        "recommended"
+      ],
+      "include": [
+        "ban-untagged-todo",
+        "camelcase",
+        "default-param-last",
+        "eqeqeq",
+        "explicit-function-return-type",
+        "explicit-module-boundary-types",
+        "no-await-in-loop",
+        "no-const-assign",
+        "no-eval",
+        "no-external-import",
+        "no-sparse-arrays"
+      ]
     }
   }
+}
