@@ -1,6 +1,6 @@
 import { gitPath } from "./getProjectTopLevel.ts";
 
-export function getGitBranchesSync(): string[] | Error {
+export function getBranchesSync(): string[] | Error {
     try {
         const packedRefs = Deno.readTextFileSync(`${gitPath}/packed-refs`);
         const branches = extractBranchesfromPackedRef(packedRefs);
